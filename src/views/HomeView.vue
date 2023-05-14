@@ -1,38 +1,48 @@
 <template>
   <div class="home">
-    <h1>Homepage</h1>
-    <p>
-      Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim
-      labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet.
-      Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum
-      Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.
-      Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex
-      occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat
-      officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in
-      Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non
-      excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco
-      ut ea consectetur et est culpa et culpa duis.
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim
-      labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet.
-      Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum
-      Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.
-      Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex
-      occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat
-      officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in
-      Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non
-      excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco
-      ut ea consectetur et est culpa et culpa duis.
-    </p>
+    <h1>Home</h1>
+    <input type="text" v-model="search" />
+    <p>search term - {{ search }}</p>
+    <div v-for="name in matchingNames" :key="name">{{ name }}</div>
+    <button @click="handleClick">stop watching</button>
   </div>
 </template>
 
 <script>
+import { watch } from "vue";
+import { watchEffect } from "vue";
+import { ref } from "vue";
+import { computed } from "vue";
+
 // @ is an alias to /src
 
 export default {
   name: "HomeView",
-  components: {},
+  setup() {
+    const search = ref("");
+    const names = ref([
+      "mario",
+      "yoshi",
+      "luigi",
+      "toad",
+      "bowser",
+      "koopa",
+      "peach",
+    ]);
+    const stopWatch = watch(search, () => {
+      console.log("watch function ran");
+    });
+    const stopEffect = watchEffect(() => {
+      console.log("watch effect function ran", search.value);
+    });
+    const matchingNames = computed(() => {
+      return names.value.filter((name) => name.includes(search.value));
+    });
+    const handleClick = () => {
+      stopWatch();
+      stopEffect();
+    };
+    return { names, search, matchingNames, handleClick };
+  },
 };
 </script>
