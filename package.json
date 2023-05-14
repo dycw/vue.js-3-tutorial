@@ -1,5 +1,5 @@
 {
-  "name": "modal-project",
+  "name": "reaction-timer",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,14 +11,9 @@
     "vue": "^3.2.13"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
     "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-service": "~5.0.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead",
-    "not ie 11"
-  ]
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "typescript": "~4.5.5"
+  }
 }
